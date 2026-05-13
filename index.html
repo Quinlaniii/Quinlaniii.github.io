@@ -4,22 +4,6 @@
 <body>
 <h1 id="mainTitle">Антон Балясников</h1>
 <p class="txt1">Могучий программист.</p>
-<script>
-let age;
-let isConfirmed = false;
-do {
-    age = prompt("Введите ваш возраст:");
-    if (age === null) {
-        alert("Товарищ майор уже выехал.");
-        window.location.replace('https://lawinweb.ru/vozrastnaya-markirovka-sajtov/');
-        break; 
-    }
-    isConfirmed = confirm(`Вы уверены, что вам ${age}?`);
-} while (!isConfirmed);
-if (isConfirmed) {
-    alert("Возраст подтвержден. Спасибо!");
-}
-</script>
 <input type="text" id="userInput" placeholder="Введите фамилию">
 <button id="changeBtn">Присвоить инновацию</button>
 <script>
@@ -35,6 +19,22 @@ button.addEventListener('click', function() {
         alert("Просто так не жми!");
     }
 });
+</script>
+<script>
+let age;
+let isConfirmed = false;
+do {
+    age = prompt("Введите ваш возраст:");
+    if (age === null) {
+        alert("Товарищ майор уже выехал.");
+        window.location.replace('https://lawinweb.ru/vozrastnaya-markirovka-sajtov/');
+        break; 
+    }
+    isConfirmed = confirm(`Вы уверены, что вам ${age}?`);
+} while (!isConfirmed);
+if (isConfirmed) {
+    alert("Возраст подтвержден. Спасибо!");
+}
 </script>
 </body>
 <style>
@@ -74,7 +74,6 @@ button {
     color: white;
     border: none;
     border-radius: 5px;
-    /* Изменение цвета при наведении из image_e7a8ff.png */
     transition: background-color 0.3s;
 }
 button:hover {
@@ -83,7 +82,7 @@ button:hover {
 input {
     padding: 10px;
     font-size: 16px;
-    border: 2px solid #ccc; /* Рамка из image_e7a8ff.png */
+    border: 2px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
 }
