@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Титульный лист</title>
+    <style>
+        /* Стилизация под лист A4 для печати */
+        body {
+            background-color: #e0e0e0;
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .page-a4 {
+            background-color: #fff;
+            width: 210mm;
+            min-height: 297mm; /* Стандартные размеры A4 */
+            padding: 20mm;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            color: #000;
+            position: relative;
+        }
+
+        .header-section {
+            text-align: center;
+            font-size: 14pt;
+            line-height: 1.2;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: 150px;
+            margin-bottom: 10px;
+        }
+
+        .university-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .department-name {
+            margin-bottom: 50px;
+        }
+
+        .title-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .title-section h1 {
+            font-size: 24pt;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+        }
+
+        .title-section p {
+            font-size: 16pt;
+            margin: 0;
+        }
+
+        .signatures-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 40px;
+            font-size: 14pt;
+        }
+
+        .signatures-box {
+            width: 50%;
+            line-height: 1.5;
+        }
+
+        .city-year {
+            position: absolute;
+            bottom: 20mm;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 14pt;
+        }
+
+        /* Убираем тени и фон при выводе на печать */
+        @media print {
+            body { background-color: #fff; padding: 0; }
+            .page-a4 { box-shadow: none; width: 100%; min-height: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-a4">
+    <div class="header-section">
+        <img src="logostankin.png" alt="Логотип СТАНКИН" class="logo" onerror="this.style.display='none'">
+        <div class="university-name">МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ</div>
+        <div>ФЕДЕРАЛЬНОЕ ГОСУДАРСТВЕННОЕ АВТОНОМНОЕ ОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ ВЫСШЕГО ОБРАЗОВАНИЯ</div>
+        <div class="university-name">«МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ ТЕХНОЛОГИЧЕСКИЙ УНИВЕРСИТЕТ «СТАНКИН»</div>
+        <br>
+        <div class="department-name">Кафедра <span id="out-department">_____________________</span></div>
+    </div>
+
+    <div class="title-section">
+        <h1>ЛАБОРАТОРНАЯ РАБОТА</h1>
+        <p>по дисциплине (модулю)</p>
+    </div>
+
+    <div class="signatures-section">
+        <div class="signatures-box">
+            <p><strong>Выполнил:</strong><br>
+            Студент группы <span id="out-group">_______</span><br>
+            <span id="out-student">_____________________</span></p>
+            <br>
+            <p><strong>Проверил:</strong><br>
+            <span id="out-teacher">_____________________</span></p>
+        </div>
+    </div>
+
+    <div class="city-year">
+        Москва, <span id="out-year"></span> г.
+    </div>
+</div>
+
+<script>
+    // 1. Получаем строку параметров из URL (всё, что после знака '?')
+    const queryString = window.location.search;
+    // 2. Используем встроенный интерфейс браузера для парсинга
+    const urlParams = new URLSearchParams(queryString);
+
+    // 3. Функция для безопасной вставки текста, если параметр существует
+    function fillField(paramName, elementId) {
+        const value = urlParams.get(paramName);
+        if (value) {
+            document.getElementById(elementId).textContent = value;
+        }
+    }
+
+    // 4. Заполняем поля
+    fillField('department', 'out-department');
+    fillField('group', 'out-group');
+    fillField('student', 'out-student');
+    fillField('teacher', 'out-teacher');
+
+    // 5. Автоматически проставляем текущий год внизу страницы
+    document.getElementById('out-year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>

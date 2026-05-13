@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор титульных листов</title>
+    <style>
+        /* Стилизуем аналогично основному сайту для единства дизайна */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #2b1f31;
+            color: #f0e6f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .generator-container {
+            background-color: #3a2a42;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 500px;
+        }
+        h2 { text-align: center; margin-bottom: 20px; color: #a476c4; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #c2b2cc; }
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background-color: #2b1f31;
+            color: #fff;
+            box-sizing: border-box;
+        }
+        input:focus { outline: none; border-color: #a476c4; }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #a476c4;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+        .btn:hover { background-color: #b88edd; }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #c2b2cc;
+            text-decoration: none;
+        }
+        .back-link:hover { color: #fff; }
+    </style>
+</head>
+<body>
+
+<div class="generator-container">
+    <h2>Создать титульный лист</h2>
+    <form id="titleForm">
+        <div class="form-group">
+            <label>Кафедра</label>
+            <input type="text" name="department" required placeholder="Например: Информационные системы">
+        </div>
+        <div class="form-group">
+            <label>Группа</label>
+            <input type="text" name="group" required placeholder="Например: ИДБ-21-11">
+        </div>
+        <div class="form-group">
+            <label>ФИО студента</label>
+            <input type="text" name="student" required placeholder="Иванов И.И.">
+        </div>
+        <div class="form-group">
+            <label>ФИО преподавателя</label>
+            <input type="text" name="teacher" required placeholder="Петров П.П.">
+        </div>
+        <button type="submit" class="btn">Сгенерировать</button>
+    </form>
+    <a href="resume.html" class="back-link">← Вернуться к резюме</a>
+</div>
+
+<script>
+    // Обработка отправки формы
+    document.getElementById('titleForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Останавливаем стандартную отправку
+
+        // Собираем данные из формы (name атрибуты инпутов)
+        const formData = new FormData(this);
+        const params = new URLSearchParams(formData).toString();
+
+        // Делаем редирект на страницу результата, передавая данные в URL
+        // Пример URL: title.html?department=...&group=...
+        window.location.href = 'title.html?' + params;
+    });
+</script>
+
+</body>
+</html>

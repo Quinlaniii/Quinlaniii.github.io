@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Балясников Антон | Могучий программист</title>
+    <style>
+        /* Базовые стили и цветовая палитра */
+        :root {
+            --bg-color: #2b1f31; /* Темно-фиолетовый пастельный фон */
+            --card-bg: #3a2a42;  /* Фон для карточек */
+            --text-primary: #f0e6f5; /* Светлый текст */
+            --text-secondary: #c2b2cc; /* Приглушенный текст */
+            --accent-color: #a476c4; /* Акцентный фиолетовый */
+            --accent-hover: #b88edd;
+            --border-radius: 16px;
+        }
+
+        /* Сброс стилей и плавная прокрутка */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth; /* Плавный скролл к якорям */
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+
+        /* Контейнер для центрирования контента */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        /* Секции */
+        section {
+            margin-bottom: 60px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            /* Начальное состояние для анимации */
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        /* Класс, который добавляется JS при скролле */
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* Шапка / Интро */
+        .intro {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .intro h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .intro p.role {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .intro p.desc {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        /* Кнопки */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--accent-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+            transform: scale(1.05);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+
+        /* Опыт работы и Образование (Flexbox) */
+        .job, .edu-card {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .job:last-child, .edu-card:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Адаптивность для мобильных */
+            margin-bottom: 10px;
+        }
+
+        .job-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .job-dates {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Навыки (CSS Grid/Flex) */
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background-color: rgba(164, 118, 196, 0.2);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Контактная форма */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background-color: #2b1f31;
+            color: var(--text-primary);
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        /* Мои работы */
+        .portfolio-card {
+            text-align: center;
+            padding: 20px;
+            border: 1px dashed var(--accent-color);
+            border-radius: var(--border-radius);
+        }
+
+        /* Адаптивность (Медиазапросы) */
+        @media (max-width: 600px) {
+            .intro h1 { font-size: 2rem; }
+            .job-header { flex-direction: column; align-items: flex-start; }
+            .job-dates { margin-top: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Интро -->
+    <section class="intro visible">
+        <h1>Балясников Антон</h1>
+        <p class="role">Могучий программист</p>
+        <p class="desc">Решение любых проблем с программным обеспечением в кратчайшие сроки.</p>
+        <div>
+            <!-- Псевдо-ссылка для скачивания PDF -->
+            <a href="resume.pdf" download class="btn" onclick="alert('Демонстрация скачивания файла'); return false;">Скачать резюме</a>
+            <!-- Плавный скролл к форме -->
+            <a href="#contact" class="btn btn-outline">Связаться со мной</a>
+        </div>
+    </section>
+
+    <!-- Опыт работы -->
+    <section class="fade-section">
+        <h2>Опыт работы</h2>
+        <div class="job">
+            <div class="job-header">
+                <span class="job-title">Старший разработчик — IT Solutions</span>
+                <span class="job-dates">Январь 2021 — Настоящее время</span>
+            </div>
+            <p class="job-desc">Проектирование архитектуры веб-приложений, менторство младших разработчиков, оптимизация производительности баз данных и устранение критических багов.</p>
+        </div>
+        <div class="job">
+            <div class="job-header">
+                <span class="job-title">Web-программист — Tech Studio</span>
+                <span class="job-dates">Март 2018 — Декабрь 2020</span>
+            </div>
+            <p class="job-desc">Разработка адаптивных интерфейсов, создание SPA-приложений на современных фреймворках, интеграция с REST API.</p>
+        </div>
+    </section>
+
+    <!-- Образование -->
+    <section class="fade-section">
+        <h2>Образование</h2>
+        <div class="edu-card">
+            <div class="job-header">
+                <span class="job-title">МГТУ СТАНКИН</span>
+                <span class="job-dates">2023 — 8888</span>
+            </div>
+            <p>Факультет: МП (Могучее Программирование)</p>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 5px;">Специализация: Системная инженерия и программирование.</p>
+        </div>
+    </section>
+
+    <!-- Навыки -->
+    <section class="fade-section">
+        <h2>Навыки</h2>
+        <div class="skills-list">
+            <div class="skill-tag">HTML5 / CSS3</div>
+            <div class="skill-tag">JavaScript (ES6+)</div>
+            <div class="skill-tag">Адаптивная верстка</div>
+            <div class="skill-tag">Решение проблем (Problem Solving)</div>
+            <div class="skill-tag">Работа в команде</div>
+            <div class="skill-tag">Стрессоустойчивость</div>
+            <div class="skill-tag">Git / GitHub</div>
+        </div>
+    </section>
+
+    <!-- Мои работы -->
+    <section class="fade-section" id="portfolio">
+        <h2>Мои работы</h2>
+        <div class="portfolio-card">
+            <h3>Генератор титульных листов</h3>
+            <p style="margin-bottom: 20px; color: var(--text-secondary);">Инструмент для автоматического создания HTML-документов титульных листов для лабораторных работ МГТУ СТАНКИН.</p>
+            <!-- Ссылка на страницу генератора -->
+            <a href="kgenerator.html" class="btn">Перейти к генератору</a>
+        </div>
+    </section>
+
+    <!-- Контактная форма -->
+    <section class="fade-section" id="contact">
+        <h2>Связаться со мной</h2>
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="name">Ваше имя</label>
+                <input type="text" id="name" placeholder="Иван Иванов">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="ivan@example.com">
+            </div>
+            <div class="form-group">
+                <label for="message">Сообщение</label>
+                <textarea id="message" rows="5" placeholder="Здравствуйте, Антон! У нас есть для вас задача..."></textarea>
+            </div>
+            <button type="submit" class="btn">Отправить сообщение</button>
+        </form>
+    </section>
+</div>
+
+<script>
+    /* 
+     * Логика анимации появления секций при прокрутке 
+     * Используем IntersectionObserver для отслеживания видимости элемента на экране
+     */
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15 // Секция появится, когда 15% ее высоты будет в зоне видимости
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Добавляем класс, который запускает CSS-транзицию
+                entry.target.classList.add('visible');
+                // Перестаем следить за элементом после его появления
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Находим все секции, которые нужно анимировать
+    document.querySelectorAll('.fade-section').forEach(section => {
+        observer.observe(section);
+    });
+
+    /* 
+     * Базовая валидация формы на чистом JS
+     */
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Предотвращаем стандартную отправку формы (перезагрузку страницы)
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        // Проверка на пустые поля
+        if (!name || !email || !message) {
+            alert('Пожалуйста, заполните все поля формы.');
+            return;
+        }
+
+        // Простая проверка формата email через регулярное выражение
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert('Пожалуйста, введите корректный email адрес.');
+            return;
+        }
+
+        // Если всё окей
+        alert(`Спасибо, ${name}! Ваше сообщение успешно отправлено.`);
+        this.reset(); // Очищаем форму
+    });
+</script>
+</body>
+</html>
